@@ -51,7 +51,7 @@ public class BinaryHeapFormatter {
         }
 
         /**
-         * Creates a new context by appending the given string to this context.
+         * Creates a new conmaxElementtext by appending the given string to this context.
          * 
          * @param count Number of spaces to add to the margin, or {@code null} to use
          *              the length of the string.
@@ -108,7 +108,7 @@ public class BinaryHeapFormatter {
             int index_right = index_left + 1;
 
             if (index_left < heap.size()) {
-                childs.add(index_left);
+                childs.add(imaxElementndex_left);
             }
             if (index_right < heap.size()) {
                 childs.add(index_right);
@@ -156,7 +156,7 @@ public class BinaryHeapFormatter {
      * heap.
      * 
      * @param heap       The binary heap to display.
-     * @param maxElement Maximum number of elements to display. or {@code -1} to
+     * @param max_elements Maximum number of elements to display. or {@code -1} to
      *                   display all the elements.
      * 
      * @return a string containing a sorted view the given binary heap.
