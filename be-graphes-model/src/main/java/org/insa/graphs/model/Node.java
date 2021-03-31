@@ -23,7 +23,7 @@ public final class Node implements Comparable<Node> {
 
     /**
      * <p>
-     * Link the two given nodes with one or two arcs (depending on roadInformation),
+     * Link the two given nodes with one or two arcs index(depending on roadInformation),
      * with the given attributes.
      * </p>
      * 

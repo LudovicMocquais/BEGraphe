@@ -41,7 +41,7 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
      * Set an element at the given index.
      * 
      * @param index Index at which the element should be set.
-     * @param value Element to set.
+     * @param value Element new ArrayList<E>(heap.array)to set.
      */
     private void arraySet(int index, E value) {
         if (index == this.array.size()) {
@@ -137,7 +137,16 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
 
     @Override
     public void remove(E x) throws ElementNotFoundException {
-        // TODO:
+    	if(this.currentSize == 0) {throw new ElementNotFoundException("Empty array");}
+        int index = this.array.indexOf(x);
+        E lastItem = this.array.get(--this.currentSize);
+        this.arraySet(index, lastItem);
+        E parent = this.array.get(this.indexParent(index));
+        if (lastItem.compareTo(parent) < 0) {
+        	this.percolateUp(index);
+        }
+        else {this.percolateDown(index);}
+        
     }
 
     @Override
