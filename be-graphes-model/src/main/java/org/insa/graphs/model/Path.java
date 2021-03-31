@@ -30,13 +30,49 @@ public class Path {
      * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
      *         consecutive nodes in the list are not connected in the graph.
      * 
-     * @deprecated Need to be implemented.
+     * Need to be implemented.
      */
     public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
-        List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
-        return new Path(graph, arcs);
+    	Path path;
+        if(nodes.size()>1){
+	    	List<Arc> arcs = new ArrayList<Arc>();
+	        for(int i = 0;i<nodes.size()-1;i++) {
+	        	
+	        	List<Arc> successors = nodes.get(i).getSuccessors();
+	        	List<Arc> right_successors = new ArrayList<Arc>();
+	        	for(Arc arc : successors) {
+	        		if(arc.getDestination()==nodes.get(i+1)) {
+	        			right_successors.add(arc);
+	        		}	
+	        	}
+	        	
+	        	double travel_min = Double.POSITIVE_INFINITY;	
+	        	int id = 0;
+	        	
+	        	for(int j = 0;j<right_successors.size();j++) {
+	        		double travel = right_successors.get(j).getMinimumTravelTime();
+	        		if(travel < travel_min) {
+	        			travel_min = travel;
+	        			id = j;
+	        		}
+	        	}
+	        	if(right_successors.size() !=0) {arcs.add(right_successors.get(id));}
+	        	else {throw new IllegalArgumentException("Cannot proceed with the creation of the path, no link between two nodes of the path.");}
+	        }
+	        path = new Path(graph, arcs);
+        }
+        else if(nodes.size()==1) {
+        	
+        	path = new Path(graph, nodes.get(0));
+        	
+        } 
+        else {
+        	
+        	path = new Path(graph);
+        	
+        }
+        return path;
     }
 
     /**
@@ -45,19 +81,55 @@ public class Path {
      * 
      * @param graph Graph containing the nodes in the list.
      * @param nodes List of nodes to build the path.
-     * 
+     * is.graph=graph;
      * @return A path that goes through the given list of nodes.
      * 
      * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
      *         consecutive nodes in the list are not connected in the graph.
      * 
-     * @deprecated Need to be implemented.
+     * Need to be implemented.
      */
     public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
-        List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
-        return new Path(graph, arcs);
+    	Path path;
+        if(nodes.size()>1){
+	    	List<Arc> arcs = new ArrayList<Arc>();
+	        for(int i = 0;i<nodes.size()-1;i++) {
+	        	
+	        	List<Arc> successors = nodes.get(i).getSuccessors();
+	        	List<Arc> right_successors = new ArrayList<Arc>();
+	        	for(Arc arc : successors) {
+	        		if(arc.getDestination()==nodes.get(i+1)) {
+	        			right_successors.add(arc);
+	        		}	
+	        	}
+	        	
+	        	float dist_min = Float.POSITIVE_INFINITY;	
+	        	int id = 0;
+	        	
+	        	for(int j = 0;j<right_successors.size();j++) {
+	        		float dist = right_successors.get(j).getLength();
+	        		if(dist < dist_min) {
+	        			dist_min = dist;
+	        			id = j;
+	        		}
+	        	}
+	        	if(right_successors.size() !=0) {arcs.add(right_successors.get(id));}
+	        	else {throw new IllegalArgumentException("Cannot proceed with the creation of the path, no link between two nodes of the path.");}
+	        }
+	        path = new Path(graph, arcs);
+        }
+        else if(nodes.size()==1) {
+        	
+        	path = new Path(graph, nodes.get(0));
+        	
+        } 
+        else {
+        	
+        	path = new Path(graph);
+        	
+        }
+        return path;
     }
 
     /**
@@ -176,7 +248,7 @@ public class Path {
     }
 
     /**
-     * Get the number of <b>nodes</b> in this path.
+     * Get the number of <b>nodes</b> in this .getMinimumTravelTime()path.
      * 
      * @return Number of nodes in this path.
      */
@@ -201,33 +273,30 @@ public class Path {
      * Need to be implemented.
      */
     public boolean isValid() {
-    	boolean retour = true;
-        if(this.isEmpty() != true || this.size() != 1) {}
-        else{
-        	boolean test = true;
-	    	for (int i = 0;i+1<this.arcs.size();i++){
-	    		int IdArc1Dest = this.arcs.get(i).getDestination().getId();
-	    		int IdArc2Origin = this.arcs.get(i+1).getOrigin().getId();
-	            if(test == true){
-	            	test = false;
-	            	if(this.arcs.get(0).getOrigin().getId() != this.getOrigin().getId() || IdArc1Dest!=IdArc2Origin) {
-	            		retour=false;
+    	boolean retour = false;
+        if(this.isEmpty() == true || this.size() == 1) {retour = true;}
+        else {
+        	if(this.getArcs().get(0).getOrigin().getId() != this.getOrigin().getId()) {
+        		retour=false;
+        	}
+        	else {
+        		retour = true;
+		    	for (int i = 0;i+1<this.getArcs().size();i++){
+		    		Node Arc1Dest = this.getArcs().get(i).getDestination();
+		    		Node Arc2Origin = this.getArcs().get(i+1).getOrigin();
+	            	if(Arc1Dest!=Arc2Origin) {
+	            		retour=retour&false;
 	            	}
-	            }
-	            else {
-	            	if(IdArc1Dest!=IdArc2Origin) {
-	            		retour=false;
-	            	}
-	            }
-	        }
-    	} 
+		        }
+		    } 
+        }
         return retour;
     }
 
     /**
      * Compute the length of this path (in meters).
      * 
-     * @return Total length of the path (in meters).
+     * @return Total length of the path (in mete.getMinimumTravelTime()rs).
      * 
      *  Need to be implemented.
      */
